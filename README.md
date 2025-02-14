@@ -41,15 +41,15 @@ Scroll down and click "Import"
 ### The SQL dump you provided contains all the necessary tables (admins, appointments, doctors, users) and some sample data. After importing, you should have:
 
 An admin account (admin@gmail.com/admin123)
-Some doctor accounts
-Some user accounts
-A couple of sample appointments
+| Some doctor accounts
+| Some user accounts
+| A couple of sample appointments
 
 ### Your connection.php file is already correctly configured for a default XAMPP installation with:
 
 host: localhost
-username: root
-password: (blank)
-database: dentcare
+| username: root
+| password: (blank)
+| database: dentcare
 
 Once you've completed these steps, your database will be set up and your PHP project should be able to connect to it successfully.
