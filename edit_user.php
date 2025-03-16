@@ -1,21 +1,17 @@
 <?php
 session_start();
 require('Assets/connection.php');
-require('Assets/head.php');
-
+require('Assets\head.php') ;
 if (!isset($_SESSION['admin_email'])) {
     header("Location: admin_login.php");
     exit;
 }
-
 // Check if user ID is provided
 if (!isset($_GET['id'])) {
     header("Location: manage_users.php");
     exit;
 }
-
 $user_id = intval($_GET['id']);
-
 // Fetch user details
 $query = "SELECT * FROM users WHERE id = ?";
 $stmt = $conn->prepare($query);
@@ -23,18 +19,15 @@ $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
 $user = $result->fetch_assoc();
-
 if (!$user) {
     header("Location: manage_users.php");
     exit;
 }
-
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = htmlspecialchars(trim($_POST['username']));
     $email = htmlspecialchars(trim($_POST['email']));
     $password = trim($_POST['password']);
-    
     // Update user details
     if (!empty($password)) {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -46,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $conn->prepare($update_query);
         $stmt->bind_param("ssi", $username, $email, $user_id);
     }
-    
     if ($stmt->execute()) {
         header("Location: manage_users.php?message=User updated successfully");
         exit;
@@ -54,11 +46,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error_message = "Error updating user. Please try again.";
     }
 }
-
-include('admin_navbar.php');
-?>
+include('admin_navbar.php'); ?>
 <section class="ftco-section">
-    <div class="container">
+    <div class="container ">
         <h1 class="text-center">Edit User</h1>
         <?php if (isset($error_message)): ?>
             <div class="alert alert-danger text-center"><?php echo $error_message; ?></div>
@@ -82,5 +72,5 @@ include('admin_navbar.php');
             </div>
         </form>
     </div>
-</section>
-<?php require('Assets/footer.php'); ?>
+        </section>
+    <?php require('Assets\footer.php') ; ?>
