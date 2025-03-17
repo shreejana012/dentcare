@@ -1,11 +1,11 @@
 Done: user login, user sign up, database connectivity, appointment section, Admin Section, Doctor's section.
 # DentCare PROJECT
-#TEAM 3:
-Yogendra Magar
-Thi So Ny Nguyen
-Kausar Parveen
-Shrijana Poudel
-Dikshya Sherma Limbu
+# TEAM 3:
+- Yogendra Magar
+- Thi So Ny Nguyen
+- Kausar Parveen
+- Shrijana Poudel
+- Dikshya Sherma Limbu
 
 # Steps to run the project:
 1. Install the XAMP (it will have all the required stuff like php and sql to run the project).
