@@ -1,5 +1,5 @@
 Done: user login, user sign up, database connectivity, appointment section, Admin Section, Doctor's section.
-# DentCare PROJECT
+# Dental Care Application
 # TEAM 3:
 - Yogendra Magar
 - Thi So Ny Nguyen
