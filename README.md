@@ -59,3 +59,8 @@ host: localhost
 | database: dentcare
 
 Once you've completed these steps, your database will be set up and your PHP project should be able to connect to it successfully.
+
+### Troubleshooting
+MySQL not running: If MySQL doesn’t start, check that no other service is using port 3306. Restart XAMPP or adjust the port settings.
+Incorrect login credentials: Double-check that the admin login uses the correct username (admin@gmail.com) and password (admin123).
+PHP errors: Ensure all required PHP extensions are enabled in XAMPP (such as mysqli or PDO).
