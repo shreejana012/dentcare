@@ -12,7 +12,7 @@ if (!isset($_SESSION['email'])) {
 }
 
 // Fetch user's appointments
-$query = "SELECT full_name, email, phone, doctor, appointment_date, appointment_time, message, created_at FROM appointments WHERE email = ? ORDER BY appointment_date ASC, appointment_time ASC";
+$query = "SELECT full_name, email, phone, doctor, appointment_date, appointment_time, message, created_at, id FROM appointments WHERE email = ? ORDER BY appointment_date ASC, appointment_time ASC";
 $stmt = $conn->prepare($query);
 
 if ($stmt === false) {
@@ -70,6 +70,7 @@ $result = $stmt->get_result();
                     <th>Time</th>
                     <th>Message</th>
                     <th>Created At</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -85,7 +86,11 @@ $result = $stmt->get_result();
                             <td><?php echo htmlspecialchars($row['message']); ?></td>
                             <td><?php echo htmlspecialchars($row['created_at']); ?></td>
                             <td>
-                                <a href="edit_appointment.php?id=<?php echo $row['id']; ?>" class="btn btn-warning btn-sm">Edit</a>
+                                <?php if (!empty($row['id'])): ?>
+                                    <a href="edit_appointment.php?id=<?php echo htmlspecialchars($row['id']); ?>" class="btn btn-warning btn-sm">Edit</a>
+                                <?php else: ?>
+                                    <span class="text-muted">N/A</span>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     <?php endwhile; ?>
