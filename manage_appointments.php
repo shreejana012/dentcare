@@ -1,7 +1,7 @@
 <?php
 session_start();
 require('Assets/connection.php');
-require('Assets\head.php') ;
+require('Assets/head.php') ;
 
 if (!isset($_SESSION['admin_email'])) {
     header("Location: admin_login.php");
@@ -30,7 +30,7 @@ include('admin_navbar.php'); ?>
         <div class="text-right mb-3">
             <a href="appointment_reports.php" class="btn btn-success">📊 View Report</a>
         </div>
-
+        
         <div class="table-responsive">
             <table class="table table-striped table-bordered table-hover">
                 <thead class="thead-dark">
@@ -65,4 +65,4 @@ include('admin_navbar.php'); ?>
         </div>
     </div>
                 </section>
-                <?php require('Assets\footer.php') ; ?>
+                <?php require('Assets/footer.php') ; ?>

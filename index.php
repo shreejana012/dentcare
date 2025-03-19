@@ -1,5 +1,5 @@
-<?php require('Assets\head.php') ?>
-<?php require('Assets\navbar.php') ?>
+<?php require('Assets/head.php') ?>
+<?php require('Assets/navbar.php') ?>
     
 
 <section class="home-slider owl-carousel">
@@ -696,6 +696,6 @@
     </section>
 		
 		<div></div>
-    <?php require('Assets\foot.php') ?>
+    <?php require('Assets/foot.php') ?>
    
-    <?php require('Assets\footer.php') ?>
+    <?php require('Assets/footer.php') ?>

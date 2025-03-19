@@ -1,7 +1,7 @@
 <?php
 session_start();
 require('Assets/connection.php');
-require('Assets\head.php') ;
+require('Assets/head.php') ;
 
 if (!isset($_SESSION['admin_email'])) {
     header("Location: admin_login.php");
@@ -63,4 +63,4 @@ if (isset($_GET['delete'])) {
     </section>
     
 
-   <?php require('Assets\footer.php') ; ?>
+   <?php require('Assets/footer.php') ; ?>
