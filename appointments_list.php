@@ -84,6 +84,9 @@ $result = $stmt->get_result();
                             <td><?php echo htmlspecialchars($row['appointment_time']); ?></td>
                             <td><?php echo htmlspecialchars($row['message']); ?></td>
                             <td><?php echo htmlspecialchars($row['created_at']); ?></td>
+                            <td>
+                                <a href="edit_appointment.php?id=<?php echo $row['id']; ?>" class="btn btn-warning btn-sm">Edit</a>
+                            </td>
                         </tr>
                     <?php endwhile; ?>
                 <?php else: ?>
