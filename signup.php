@@ -88,7 +88,7 @@ if ($conn->query($sql) === TRUE) {
     
 }
 $conn->close();
-require('Assets\foot.php');
+require('Assets/foot.php');
 require('Assets/footer.php');
 ?>
  

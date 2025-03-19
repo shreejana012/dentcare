@@ -64,4 +64,4 @@ include('admin_navbar.php');
         </div>
 </div>
 </section>
-<?php require('Assets\footer.php') ; ?>
+<?php require('Assets/footer.php') ; ?>
