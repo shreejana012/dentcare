@@ -27,6 +27,9 @@ include('admin_navbar.php'); ?>
 <div class="container mt-5">
         <h1 class="text-center mb-4">Manage Appointments</h1>
         
+        <div class="text-right mb-3">
+            <a href="appointment_reports.php" class="btn btn-success">📊 View Report</a>
+        </div>
 
         <div class="table-responsive">
             <table class="table table-striped table-bordered table-hover">
