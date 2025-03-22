@@ -2,10 +2,10 @@
 // db_connection.php
 
 // Database configuration
-$host = 'localhost'; // Change to your database host
-$username = 'root'; // Change to your database username
-$password = ''; // Change to your database password
-$dbname = 'dentcare'; // Change to your database name
+$host = getenv('DB_HOST') ?: 'localhost';
+$username = getenv('DB_USER') ?: 'root';
+$password = getenv('DB_PASS') ?: '';
+$dbname = getenv('DB_NAME') ?: 'dentcare';
 
 // Create connection
 $conn = new mysqli($host, $username, $password, $dbname);
