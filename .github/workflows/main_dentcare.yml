@@ -9,6 +9,12 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  AZURE_MYSQL_HOST: ${{ secrets.AZURE_MYSQL_HOST }}
+  AZURE_MYSQL_USERNAME: ${{ secrets.AZURE_MYSQL_USERNAME }}
+  AZURE_MYSQL_PASSWORD: ${{ secrets.AZURE_MYSQL_PASSWORD }}
+  AZURE_MYSQL_DBNAME: ${{ secrets.AZURE_MYSQL_DBNAME }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
