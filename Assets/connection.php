@@ -2,10 +2,10 @@
 // db_connection.php
 
 // Database configuration
-$host = getenv('DB_HOST') ?: 'localhost';
-$username = getenv('DB_USER') ?: 'root';
-$password = getenv('DB_PASS') ?: '';
-$dbname = getenv('DB_NAME') ?: 'dentcare';
+$host = getenv('AZURE_MYSQL_HOST') ?: 'localhost';
+$username = getenv('AZURE_MYSQL_USERNAME') ?: 'root';
+$password = getenv('AZURE_MYSQL_PASSWORD') ?: '';
+$dbname = getenv('AZURE_MYSQL_DBNAME') ?: 'dentcare';
 
 // Create connection
 $conn = new mysqli($host, $username, $password, $dbname);
