@@ -3,7 +3,7 @@ session_start();
 ob_start();
 require('Assets/connection.php');
 require('Assets/head.php');
-require('Assets/navbar.php');
+// require('Assets/navbar.php');
 
 // Check if user is logged in
 if (!isset($_SESSION['email'])) {
@@ -84,12 +84,6 @@ $result = $stmt->get_result();
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <?php endif; ?>
-
-        <div class="row mb-4">
-            <div class="col-12 text-end">
-                <a href="appointment.php" class="btn btn-primary btn-lg"><i class="fa fa-plus-circle me-1"></i> Book New Appointment</a>
-            </div>
-        </div>
 
         <div class="card shadow-sm">
             <div class="card-body p-0">

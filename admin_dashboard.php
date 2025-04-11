@@ -48,6 +48,24 @@ if (isset($_GET['appointment_id']) && isset($_GET['status'])) {
     }
 }
 
+
+// Handle appointment updates and notifications
+// if ($update_query->execute()) {
+//     // Set the is_updated flag to 1 and reset is_notified to 0
+//     $notifyQuery = "UPDATE appointments SET is_updated = 1, is_notified = 0 WHERE id = ?";
+//     $notifyStmt = $conn->prepare($notifyQuery);
+//     $notifyStmt->bind_param("i", $appointmentId);
+//     $notifyStmt->execute();
+    
+//     $_SESSION['success'] = "Appointment updated successfully. Patient will be notified.";
+//     header("Location: admin_appointments.php");
+//     exit();
+// } else {
+//     $_SESSION['error'] = "Error updating appointment: " . $conn->error;
+//     header("Location: admin_appointments.php");
+//     exit();
+// }
+
 // Count completed and cancelled appointments
 $completed_count_query = "SELECT COUNT(*) AS count FROM appointments WHERE status = 'done'";
 $completed_count = $conn->query($completed_count_query)->fetch_assoc()['count'];

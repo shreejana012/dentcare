@@ -37,7 +37,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bind_param('ssi', $appointmentDate, $appointmentTime, $id);
     
     if ($stmt->execute()) {
-        $_SESSION['success'] = "Appointment updated successfully!";
+        // Add notification code right here - after successful update
+        $notifyQuery = "UPDATE appointments SET is_updated = 1, is_notified = 0 WHERE id = ?";
+        $notifyStmt = $conn->prepare($notifyQuery);
+        $notifyStmt->bind_param("i", $id);
+        $notifyStmt->execute();
+        
+        $_SESSION['success'] = "Appointment updated successfully! Patient will be notified.";
         header("Location: manage_appointments.php");
         exit();
     } else {
