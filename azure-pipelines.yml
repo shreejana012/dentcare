@@ -59,23 +59,20 @@ stages:
 
   - stage: CodeAnalysis
     jobs:
-      - job: SonarQube
+      - job: SonarCloud
         steps:
           - checkout: self
             fetchDepth: 0
 
-          - task: SonarQubePrepare@5
+          - task: SonarCloudPrepare@1
             inputs:
-              SonarQube: 'SonarQube-Dentcare'
+              SonarCloud: 'SonarQube-Dentcare'
+              organization: 'spoude14'
               scannerMode: 'CLI'
-              configMode: 'manual'
-              cliProjectKey: 'dentcare-php'
-              cliProjectName: 'DentCare PHP App'
-              cliSources: '.'
 
-          - task: SonarQubeAnalyze@5
+          - task: SonarCloudAnalyze@1
 
-          - task: SonarQubePublish@5
+          - task: SonarCloudPublish@1
             inputs:
               pollingTimeoutSec: '300'
 
