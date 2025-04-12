@@ -7,16 +7,17 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  phpVersion: '8.1'
+  phpVersion: '8.1.0'
 
 stages:
   - stage: Build
     jobs:
       - job: BuildApp
         steps:
-          - task: UsePHPVersion@0
-            inputs:
-              versionSpec: '$(phpVersion)'
+          - script: |
+              choco install php --version=$(phpVersion) -y
+              php -v
+            displayName: 'Install PHP'
 
           - task: Bash@3
             displayName: 'Install Composer Dependencies'
@@ -46,12 +47,13 @@ stages:
     jobs:
       - job: RunTests
         steps:
-          - task: UsePHPVersion@0
-            inputs:
-              versionSpec: '$(phpVersion)'
+          - script: |
+              choco install php --version=$(phpVersion) -y
+              php -v
+            displayName: 'Install PHP'
 
           - script: |
-              composer global require phpunit/phpunit
+              composer install
               ./vendor/bin/phpunit --configuration phpunit.xml
             displayName: 'Run PHPUnit Tests'
 
@@ -61,6 +63,7 @@ stages:
         steps:
           - checkout: self
             fetchDepth: 0
+
           - task: SonarQubePrepare@5
             inputs:
               SonarQube: 'SonarQube-Dentcare'
@@ -69,7 +72,9 @@ stages:
               cliProjectKey: 'dentcare-php'
               cliProjectName: 'DentCare PHP App'
               cliSources: '.'
+
           - task: SonarQubeAnalyze@5
+
           - task: SonarQubePublish@5
             inputs:
               pollingTimeoutSec: '300'
