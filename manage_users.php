@@ -8,6 +8,8 @@ if (!isset($_SESSION['admin_email'])) {
     exit;
 }
 
+// DevOps PR Change - Patient Profile Feature - Issue #13
+
 // Fetch users
 $query = "SELECT * FROM users";
 $result = $conn->query($query);
