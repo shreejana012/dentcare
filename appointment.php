@@ -2,13 +2,15 @@
 // Start the session to track user data
 session_start();
 ob_start();
+
+// DevOps PR Change - Minor update for issue #12
+
 require('Assets/connection.php');
 require('Assets/head.php');
 // require('Assets/navbar.php'); // Use the original navbar
 
 // Check if user is logged in
 if (!isset($_SESSION['email'])) {
-    // Redirect to login page if not logged in
     header("Location: login.php");
     exit;
 }
@@ -44,8 +46,6 @@ if (isset($_POST['mark_notified'])) {
     $stmt = $conn->prepare($mark_read_query);
     $stmt->bind_param("s", $_SESSION['email']);
     $stmt->execute();
-    
-    // Redirect to refresh the page
     header("Location: appointment.php?notifications_read=true");
     exit;
 }
@@ -57,15 +57,15 @@ if (isset($_POST['mark_notified'])) {
         <div class="container" data-scrollax-parent="true">
             <div class="row slider-text align-items-end">
                 <div class="col-md-7 col-sm-12 ftco-animate mb-5">
-                    <p class="breadcrumbs" data-scrollax="properties: { translateY: '70%', opacity: 1.6 }"><span class="mr-2"><a href="appointment.php">Home</a></span></p>
-                    <h1 class="mb-3" data-scrollax="properties: { translateY: '70%', opacity: .9 }">Our Service Keeps you Smile</h1>
+                    <p class="breadcrumbs"><span class="mr-2"><a href="appointment.php">Home</a></span></p>
+                    <h1 class="mb-3">Our Service Keeps you Smile</h1>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
 <?php
-// Display a welcome message with the user's name and notification
 echo "<section class='ftco-section py-4'>
         <div class='container'>
             <div class='row'>
@@ -74,37 +74,30 @@ echo "<section class='ftco-section py-4'>
                         <h5 class='mb-0'>Welcome, " . htmlspecialchars($_SESSION['username']) . "!</h5>
                         <div class='d-flex align-items-center'>
                             <a href='appointments_list.php' class='btn btn-secondary mr-2'>View Appointments</a>
-                            
-                            <!-- Notification Button -->
                             <div class='dropdown mr-2 position-relative'>
-                                <button class='btn btn-info position-relative' type='button' id='notificationBtn' onclick='toggleNotifications()'>
-                                    <i class='fas fa-bell'></i> Notifications
-                                    ";
-                                    
+                                <button class='btn btn-info position-relative' id='notificationBtn' onclick='toggleNotifications()'>
+                                    <i class='fas fa-bell'></i> Notifications";
+
 if ($notification_count > 0) {
     echo "<span class='badge badge-danger rounded-circle position-absolute' style='top: -5px; right: -5px;'>" . $notification_count . "</span>";
 }
 
 echo "                          </button>
-                                
-                                <!-- Notification Dropdown -->
                                 <div id='notificationDropdown' class='dropdown-menu dropdown-menu-right shadow' style='width: 300px; padding: 0; display: none;'>
                                     <div class='card'>
                                         <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
                                             <h6 class='m-0'>Appointment Updates</h6>";
-                                            
+
 if ($notification_count > 0) {
     echo "<span class='badge badge-light'>" . $notification_count . " new</span>";
 }
 
 echo "                              </div>
                                         <div class='card-body p-0' style='max-height: 250px; overflow-y: auto;'>";
-                                        
+
 if ($updated_appointments_result->num_rows > 0) {
     echo "<div class='list-group list-group-flush'>";
-    
     while ($appt = $updated_appointments_result->fetch_assoc()) {
-        // Get doctor name
         $doctor_query = "SELECT name FROM doctors WHERE id = ?";
         $stmt = $conn->prepare($doctor_query);
         $stmt->bind_param("i", $appt['doctor_id']);
@@ -112,7 +105,7 @@ if ($updated_appointments_result->num_rows > 0) {
         $doctor_result = $stmt->get_result();
         $doctor_data = $doctor_result->fetch_assoc();
         $doctor_name = $doctor_data ? $doctor_data['name'] : 'Unknown Doctor';
-        
+
         echo "<div class='list-group-item list-group-item-action'>
                 <div class='d-flex w-100 justify-content-between'>
                     <h6 class='mb-1'>Appointment updated!</h6>
@@ -121,7 +114,6 @@ if ($updated_appointments_result->num_rows > 0) {
                 <small>New Date: " . htmlspecialchars($appt['appointment_date']) . " at " . htmlspecialchars($appt['appointment_time']) . "</small>
               </div>";
     }
-    
     echo "</div>";
 } else {
     echo "<div class='text-center py-3'>
@@ -133,7 +125,7 @@ echo "                              </div>";
 
 if ($notification_count > 0) {
     echo "<div class='card-footer bg-light'>
-            <form method='post' action=''>
+            <form method='post'>
                 <button type='submit' name='mark_notified' class='btn btn-sm btn-block btn-outline-primary'>
                     Mark all as read
                 </button>
@@ -143,8 +135,6 @@ if ($notification_count > 0) {
 
 echo "                          </div>
                             </div>
-                            </div>
-                            
                             <a href='logout.php' class='btn btn-danger'>Logout</a>
                         </div>
                     </div>
@@ -153,6 +143,7 @@ echo "                          </div>
         </div>
       </section>";
 ?>
+
 <section class="ftco-section">
     <div class="container mt-5">
         <div class="row justify-content-center">
@@ -180,7 +171,6 @@ echo "                          </div>
                                 <select class="form-control" id="doctor" name="doctor" required>
                                     <option value="">Select a doctor</option>
                                     <?php 
-                                    // Reset the result pointer to beginning
                                     $doctorResult->data_seek(0);
                                     while ($row = $doctorResult->fetch_assoc()): 
                                     ?>
@@ -216,44 +206,22 @@ echo "                          </div>
     </div>
 </section>
 
-<!-- Add Font Awesome for icons -->
+<!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <style>
-/* Custom CSS for the notification dropdown */
-#notificationDropdown {
-    position: absolute;
-    right: 0;
-    z-index: 1000;
-}
-
-#notificationDropdown.show {
-    display: block !important;
-}
-
-/* Badge positioning */
-.position-relative {
-    position: relative;
-}
-
-.position-absolute {
-    position: absolute;
-}
-
-/* Button spacing */
-.mr-2 {
-    margin-right: 0.5rem;
-}
+#notificationDropdown { position: absolute; right: 0; z-index: 1000; }
+#notificationDropdown.show { display: block !important; }
+.position-relative { position: relative; }
+.position-absolute { position: absolute; }
+.mr-2 { margin-right: 0.5rem; }
 </style>
 
 <script>
-// JavaScript to handle notification dropdown functionality
 document.addEventListener('DOMContentLoaded', function() {
-    // Close dropdown when clicking outside
     document.addEventListener('click', function(event) {
         const dropdown = document.getElementById('notificationDropdown');
         const notificationBtn = document.getElementById('notificationBtn');
-        
         if (dropdown && dropdown.classList.contains('show') && 
             !dropdown.contains(event.target) && 
             event.target !== notificationBtn) {
@@ -269,42 +237,36 @@ function toggleNotifications() {
 
 <?php 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Retrieve form data
     $fullName = htmlspecialchars($_POST['fullName']);
     $email = htmlspecialchars($_POST['email']);
     $phone = htmlspecialchars($_POST['phone']);
-    $doctorId = (int)$_POST['doctor']; // Fetch doctor_id directly
+    $doctorId = (int)$_POST['doctor'];
     $appointmentDate = htmlspecialchars($_POST['appointmentDate']);
     $appointmentTime = htmlspecialchars($_POST['appointmentTime']);
     $message = htmlspecialchars($_POST['message']);
-  
-    // Insert data into the appointments table with is_updated and is_notified set to 0
+
     $query = "INSERT INTO appointments (full_name, email, phone, doctor_id, appointment_date, appointment_time, message, is_updated, is_notified) 
               VALUES (?, ?, ?, ?, ?, ?, ?, 0, 0)";
     $stmt = $conn->prepare($query);
 
-    // Check if prepare() was successful
     if ($stmt === false) {
         die("Error in SQL statement: " . $conn->error);
     }
 
-    // Bind parameters
     $stmt->bind_param('sssisssi', $fullName, $email, $phone, $doctorId, $appointmentDate, $appointmentTime, $message, $is_updated);
     $is_updated = 0;
 
-    // Execute the statement
     if ($stmt->execute()) {
-        // Redirect with success message
         $_SESSION['success'] = "Appointment booked successfully!";
         header("Location: appointments_list.php");
         exit();
     } else {
-        // Redirect with error message
         $_SESSION['error'] = "Failed to book the appointment. Please try again.";
         header("Location: appointments_list.php");
         exit();
     }
 }
+
 require('Assets/foot.php');
-require('Assets/footer.php') 
+require('Assets/footer.php');
 ?>
