@@ -2,6 +2,14 @@
 session_start();
 ob_start();
 require('Assets/connection.php');
+
+// Process login if POST request
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    require('auth/login_logic.php'); // This handles the login processing
+    exit; // login_logic.php will handle redirects
+}
+
+// Display the login form
 require('Assets/head.php');
 require('Assets/navbar.php'); 
 ?>
@@ -61,32 +69,6 @@ require('Assets/navbar.php');
 </section>
 
 <?php
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-    $password = $_POST['password'];
-
-    $stmt = $conn->prepare("SELECT id, email, username, password FROM users WHERE email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        if (password_verify($password, $row['password'])) {
-            $_SESSION['user_id'] = $row['id'];
-            $_SESSION['email'] = $row['email'];
-            $_SESSION['username'] = $row['username'];
-            header("Location: appointment.php");
-            exit;
-        } else {
-            $_SESSION['login_error'] = "Invalid password. Please try again.";
-        }
-    } else {
-        $_SESSION['login_error'] = "No user found with this email.";
-    }
-    header("Location: login.php");
-    exit;
-}
 $conn->close();
 require('Assets/foot.php');
 require('Assets/footer.php');

@@ -12,7 +12,13 @@ include('admin_navbar.php');
 
 // fetch total number of appointments
 $totalQuery = "SELECT COUNT(*) AS total_appointments FROM appointments";
+if (!$conn) {
+    die("Database connection failed: " . mysqli_connect_error());
+}
 $totalResult = $conn->query($totalQuery);
+if (!$totalResult) {
+    die("Query failed: " . $conn->error);
+}
 $totalAppointments = $totalResult->fetch_assoc()['total_appointments'];
 
 // fetch appointments per doctor
